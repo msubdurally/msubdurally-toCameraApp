@@ -93,7 +93,7 @@ export const video_GenerativeArt1 =  (canvasCtx, options) =>{
     canvasss.height = (size * dpr)  ;
     canvasCtx.scale(dpr, dpr);
     canvasCtx.lineJoin = 'bevel';      
-    var line, dot,
+    var line, 
     odd = false, 
     lines = [], 
     gap = size / 10;
@@ -102,7 +102,6 @@ export const video_GenerativeArt1 =  (canvasCtx, options) =>{
       odd = !odd;
       line = [];
       for(var x = gap / 4; x <= size; x+= gap) {
-        dot = {x: x + (odd ? gap/2 : 0), y: y};
         line.push({
           x: x + (Math.random()*.8 - .4) * gap  + (odd ? gap/2 : 0),
           y: y + (Math.random()*.8 - .4) * gap
@@ -138,15 +137,15 @@ export const video_GenerativeArt1 =  (canvasCtx, options) =>{
     }
     var dotLine;
     odd = true;
-    for(var y = 0; y < lines.length - 1; y++) {
+    for(var yy = 0; yy < lines.length - 1; yy++) {
       odd = !odd;
       dotLine = [];
-      for(var i = 0; i < lines[y].length; i++) {
-        dotLine.push(odd ? lines[y][i]   : lines[y+1][i]);
-        dotLine.push(odd ? lines[y+1][i] : lines[y][i]);
+      for(var i = 0; i < lines[yy].length; i++) {
+        dotLine.push(odd ? lines[yy][i]   : lines[yy+1][i]);
+        dotLine.push(odd ? lines[yy+1][i] : lines[yy][i]);
       }
-      for(var i = 0; i < dotLine.length - 2; i++) {
-        drawSquareSets(dotLine[i], dotLine[i+1], dotLine[i+2]);
+      for(var ii = 0; ii < dotLine.length - 2; ii++) {
+        drawSquareSets(dotLine[ii], dotLine[ii+1], dotLine[ii+2]);
       }
     }
   }
@@ -189,14 +188,13 @@ export const pixelEffect1 =  (canvasCtx, options) =>{
       var redValue = buffer[i];
       var greenValue = buffer[i + 1];
       var blueValue = buffer[i + 2];
-      var alphaValue = buffer[i + 3]; //opacity
+      //var alphaValue = buffer[i + 3]; //opacity
       let count = buffer[i] + buffer[i + 1] + buffer[i + 2];
       //using numberOfColors, and maximum possible value of count (i.e 256 + 256 + 256 = 768)
       //divide 256/numberOfColors 
       // for each numberOfColors find corresponding sets of colour 
       //eg numberOfColors , make use of gray, white, black   or dark blue/blue/pale blue 
 
-      let colour = 0;
       if(numberOfColors > 0)
       {
         var rangeValue = (768)/numberOfColors; 
@@ -234,32 +232,32 @@ export const pixelEffect1 =  (canvasCtx, options) =>{
 
 export const GenerativeArt_Effects =  (canvasCtx, effectSubCategory, options, globalnumOfcells, globalgradientColorItemsValue) =>{
   if(canvasCtx){
-        if(effectSubCategory  == "REMOVE_COLORPATTERN_EFFECT")
+        if(effectSubCategory  === "REMOVE_COLORPATTERN_EFFECT")
         {
           GenerativeArt_Square1(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
-        else if(effectSubCategory  == "GENERATIVE_ART1")
+        else if(effectSubCategory  === "GENERATIVE_ART1")
         {
           GenerativeArt_Square1(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
-        else if(effectSubCategory  == "GENERATIVE_ART2")
+        else if(effectSubCategory  === "GENERATIVE_ART2")
         {
           GenerativeArt_Square2(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
-        else if(effectSubCategory  == "GENERATIVE_ART3")
+        else if(effectSubCategory  === "GENERATIVE_ART3")
         {
           //pixelEffect1(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numberOfColors: 4, colorGradientValue : 3, gradientColorItemsValue: globalgradientColorItemsValue});
           GenerativeArt_Square3(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
-        else if(effectSubCategory  == "GENERATIVE_ART4")
+        else if(effectSubCategory  === "GENERATIVE_ART4")
         {
           GenerativeArt_Square4(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
-        else if(effectSubCategory  == "GENERATIVE_ART5")
+        else if(effectSubCategory  === "GENERATIVE_ART5")
         {
           GenerativeArt_5(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
-        else if(effectSubCategory  == "GENERATIVE_ART6")
+        else if(effectSubCategory  === "GENERATIVE_ART6")
         {
           //utilities.GenerativeArt_6(canvasCtx, { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalnumOfcells});
         }
@@ -317,7 +315,7 @@ export const GenerativeArt_Square1 =  (canvasCtx, options) =>{
 export const GenerativeArt_Square2 =  (canvasCtx, options) =>{
   //Fill canvas with irregular boxes
   if(canvasCtx){
-    var globalgradientColorItemsValue = utilHelper.getImageColorArray(8);
+    //var globalgradientColorItemsValue = utilHelper.getImageColorArray(8);
     canvasCtx.save();
     var canvasss = canvasCtx.canvas; 
     var canvasWidth  = canvasss.width;
@@ -474,14 +472,14 @@ export const GenerativeArt_Square4 =  (canvasCtx, options) =>{
         var updatedWidthSize = widthSize;
         var updatedHeightSize = heightSize;
         if(hor){
-          updatedHeightSize = updatedHeightSize;
+          //updatedHeightSize = updatedHeightSize;
           drawHor(x, y, updatedWidthSize, (updatedHeightSize / 5), startSteps, hor); 
           drawHor(x, y + (0.2 * updatedHeightSize), updatedWidthSize, (updatedHeightSize / 5), startSteps, hor); 
           drawHor(x, y + (0.4 * updatedHeightSize), updatedWidthSize, (updatedHeightSize / 5), startSteps, hor); 
           drawHor(x, y + (0.6 * updatedHeightSize), updatedWidthSize, (updatedHeightSize / 5), startSteps, hor); 
           drawHor(x, y + (0.8 * updatedHeightSize), updatedWidthSize, (updatedHeightSize / 5), startSteps, hor); 
         }else{
-          updatedWidthSize = updatedWidthSize;
+          //updatedWidthSize = updatedWidthSize;
           drawHor(x , y, (updatedWidthSize / 5), updatedHeightSize, startSteps, hor); 
           drawHor(x + (0.2 * updatedWidthSize), y , (updatedWidthSize / 5), updatedHeightSize, startSteps, hor); 
           drawHor(x + (0.4 * updatedWidthSize), y , (updatedWidthSize / 5), updatedHeightSize, startSteps, hor); 
@@ -527,11 +525,7 @@ export const GenerativeArt_5 =  (canvasCtx, options) =>{
         startSteps = 4;
         var updatedWidthSize = widthSize;
         var updatedHeightSize = heightSize;
-        if(hor){
-          updatedHeightSize = updatedHeightSize;
-        }else{
-          updatedWidthSize = updatedWidthSize;
-        }
+        
           drawCirc(x, y, updatedWidthSize, updatedHeightSize, startSteps, hor); 
 
           drawCirc(x, y + (0.2 * updatedHeightSize), updatedWidthSize, updatedHeightSize, startSteps, hor); 

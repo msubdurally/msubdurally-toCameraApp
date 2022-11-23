@@ -194,10 +194,10 @@ function App() {
 
       if(cameraOn && typeof videoRef.current !== "undefined" && videoRef.current !== null)
       {
-        if(effectCategory == "PIXEL")
+        if(effectCategory === "PIXEL")
         {
-          globalnumOfColoursValue = numOfColoursValue == 0 ? 8 : numOfColoursValue;
-          globalcolorgradientValue = colorgradientValue == 0 ? 8 : colorgradientValue;
+          globalnumOfColoursValue = numOfColoursValue === 0 ? 8 : numOfColoursValue;
+          globalcolorgradientValue = colorgradientValue === 0 ? 8 : colorgradientValue;
           globalgradientColorItemsValue = pixelUtilhelper.generateRandomHexColors(globalcolorgradientValue);
           if(globalgradientColorItemsValue && globalgradientColorItemsValue.length > 0){
             globalnumOfColoursValue = globalgradientColorItemsValue.length;
@@ -208,10 +208,10 @@ function App() {
           globalgradientColorItemsValue = artUtilHelper.getImageColorArray(globalcolorgradientValue);
         }
 
-        if(effectCategory == "GENERATIVE_ART")
+        if(effectCategory === "GENERATIVE_ART")
         {
-          globalnumOfcells = numOfcells == 0 ? 10 : numOfcells;
-          if(effectSubCategory  == "GENERATIVE_ART3")
+          globalnumOfcells = numOfcells === 0 ? 10 : numOfcells;
+          if(effectSubCategory  === "GENERATIVE_ART3")
           {
             globalgradientColorItemsValue = artUtilHelper.getImageColorArray(3);
           }
@@ -226,7 +226,7 @@ function App() {
 
         if(typeof globalEffectListOption !== "undefined" && globalEffectListOption !== null && globalEffectListOption.length > 0)
         {
-          if(effectCategory == "PIXEL")
+          if(effectCategory === "PIXEL")
           {
             globalEffectListOption[0].globalEffectCategory = effectCategory;
             globalEffectListOption[0].globalEffectSubCategory = globalEffectSubCategory;
@@ -236,7 +236,7 @@ function App() {
             globalEffectListOption[0].globalgradientColorItemsValue = globalgradientColorItemsValue;
 
           }
-          else if (effectCategory == "GENERATIVE_ART")
+          else if (effectCategory === "GENERATIVE_ART")
           {
             globalEffectListOption[1].globalEffectCategory = effectCategory;
             globalEffectListOption[1].globalEffectSubCategory = globalEffectSubCategory;
@@ -263,7 +263,7 @@ function App() {
             canvasElement.width,
             canvasElement.height); 
 
-            if(globalEffectListOption[0] && globalEffectListOption[0].globalEffectCategory == "PIXEL")
+            if(globalEffectListOption[0] && globalEffectListOption[0].globalEffectCategory === "PIXEL")
             {
 
               pixelUtil.GenerativePixel_Effects(canvasCtx,
@@ -278,7 +278,7 @@ function App() {
 
             }
             
-            if(globalEffectListOption[1] && globalEffectListOption[1].globalEffectCategory == "GENERATIVE_ART")
+            if(globalEffectListOption[1] && globalEffectListOption[1].globalEffectCategory === "GENERATIVE_ART")
             {
               artUtil.GenerativeArt_Effects(canvasCtx,
                 globalEffectListOption[1].globalEffectSubCategory, 
@@ -288,7 +288,7 @@ function App() {
               
             }
 
-            if(selectedEffectMenu == "NONE")
+            if(selectedEffectMenu === "NONE")
             {
               console.log('No Effect Selected');
             }
@@ -344,7 +344,7 @@ function App() {
   
   useEffect(() => {
     turnCameraOn(true);
-  }, [cameraOn]);
+  });
   //videoRef
   //[cameraOn]
 
@@ -386,7 +386,7 @@ function App() {
             />
           ) : (
             <>
-            <h1>Turn Camera On <img className='arrowOnbackground' src={backgroundArrowImg}></img></h1>
+            <h1>Turn Camera On <img className='arrowOnbackground' alt ='turn camera on' src={backgroundArrowImg}></img></h1>
             
             </>
           )}
@@ -409,7 +409,7 @@ function App() {
         </div>
         <div className='menu-container' ref={menuRef}>
           <div className='menu-trigger' onClick={()=>{setOpenMenu(!openMenu)}}>
-            <img src={mainMenu}></img>
+            <img src={mainMenu} alt ='main menu'></img>
           </div>
           <div className={`dropdown-menu ${openMenu? 'active' : 'inactive'}`} >
             <h3>ToCamera<br/><span> Effects</span></h3>
@@ -429,7 +429,7 @@ function App() {
 
 
                                 <li className = 'dropdownItem_li'>
-                                  <img src={canvasEffectico}></img>
+                                  <img src={canvasEffectico} alt ='Pattern effects'></img>
                                   <ColorPatternPicker handlePatternPickerSelectionChange={handlePatternPickerSelectionChange} />
                                 </li>
 
@@ -461,12 +461,12 @@ function App() {
 
 
 function DropdownItem(props){
-  if(props.canvasEffect == "NONE" || props.canvasEffect == "REMOVE_EFFECT")
+  if(props.canvasEffect === "NONE" || props.canvasEffect === "REMOVE_EFFECT")
   {
     return(
       
       <li className = 'dropdownItem_li'>
-        <img src={props.img}></img>
+        <img src={props.img} alt ='menu icons'></img>
         <a onClick={() => props.funtionCall()}> {props.text} </a>
       </li>
     );
