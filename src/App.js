@@ -170,6 +170,10 @@ function App() {
     }
   }
 
+  
+  const generateCartoonEffect = () => {
+    videoCanvasEffect("CARTOON", "CARTOON", "CARTOON_EFFECT_001", 5, 5, 20);
+  }
 
   const generateRandomColorEffectV1 = () => {
     videoCanvasEffect("PIXEL", "PIXEL", "PIXEL_EFFECT_001", 5, 5, 20);
@@ -191,10 +195,20 @@ function App() {
       canvasRef.current.height = videoHeight;
       const canvasElement = canvasRef.current;
       const canvasCtx = canvasElement.getContext("2d");
+      canvasCtx.willReadFrequently = true;
 
       if(cameraOn && typeof videoRef.current !== "undefined" && videoRef.current !== null)
       {
         if(effectCategory === "PIXEL")
+        {
+          globalnumOfColoursValue = numOfColoursValue === 0 ? 8 : numOfColoursValue;
+          globalcolorgradientValue = colorgradientValue === 0 ? 8 : colorgradientValue;
+          globalgradientColorItemsValue = pixelUtilhelper.generateRandomHexColors(globalcolorgradientValue);
+          if(globalgradientColorItemsValue && globalgradientColorItemsValue.length > 0){
+            globalnumOfColoursValue = globalgradientColorItemsValue.length;
+          }
+        }
+        else if(effectCategory === "CARTOON")
         {
           globalnumOfColoursValue = numOfColoursValue === 0 ? 8 : numOfColoursValue;
           globalcolorgradientValue = colorgradientValue === 0 ? 8 : colorgradientValue;
@@ -236,6 +250,16 @@ function App() {
             globalEffectListOption[0].globalgradientColorItemsValue = globalgradientColorItemsValue;
 
           }
+          else if(effectCategory === "CARTOON")
+          {
+            globalEffectListOption[0].globalEffectCategory = effectCategory;
+            globalEffectListOption[0].globalEffectSubCategory = globalEffectSubCategory;
+            globalEffectListOption[0].globalnumOfColoursValue = globalnumOfColoursValue;
+            globalEffectListOption[0].globalcolorgradientValue = globalcolorgradientValue;
+            globalEffectListOption[0].globalnumOfcells = globalnumOfcells;
+            globalEffectListOption[0].globalgradientColorItemsValue = globalgradientColorItemsValue;
+
+          }
           else if (effectCategory === "GENERATIVE_ART")
           {
             globalEffectListOption[1].globalEffectCategory = effectCategory;
@@ -267,6 +291,21 @@ function App() {
             {
 
               pixelUtil.GenerativePixel_Effects(canvasCtx,
+                    globalEffectListOption[0].globalEffectSubCategory,
+                   { color: "white", 
+                      lineWidth: 0.124, 
+                      radius: 0.75, 
+                      numberOfColors: globalEffectListOption[0].globalnumOfColoursValue, 
+                      colorGradientValue : globalEffectListOption[0].globalcolorgradientValue, 
+                      gradientColorItemsValue: globalEffectListOption[0].globalgradientColorItemsValue
+                    });
+
+            }
+
+            if(globalEffectListOption[0] && globalEffectListOption[0].globalEffectCategory === "CARTOON")
+            {
+
+              pixelUtil.GenerativeCartoon_Effects(canvasCtx,
                     globalEffectListOption[0].globalEffectSubCategory,
                    { color: "white", 
                       lineWidth: 0.124, 
@@ -426,6 +465,7 @@ function App() {
                                 <DropdownItem funtionCall = {takePhoto} canvasEffect = {"NONE"} img = {takePictureIco} text = {"Take Picture"}/>
                                 <DropdownItem funtionCall = {generateRandomColorEffectV1} canvasEffect = {"NONE"} img = {camEffect1Ico} text = {"Random 5 Color Effect"}/>
                                 <DropdownItem funtionCall = {generateRandomColorEffectV2} canvasEffect = {"NONE"} img = {camEffect2Ico} text = {"Random 10 Color Effect"}/>
+                                <DropdownItem funtionCall = {generateCartoonEffect} canvasEffect = {"NONE"} img = {canvasEffectico} text = {"Cartoon"}/>
 
 
                                 <li className = 'dropdownItem_li'>

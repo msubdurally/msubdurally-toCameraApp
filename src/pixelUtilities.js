@@ -179,3 +179,93 @@ export const pixelEffectWithColorPattern =  (canvasCtx, options) =>{
     canvasCtx.putImageData(idata, nxt_X_StartPt, nxt_Y_StartPt);
   }
 };
+
+
+
+///////////////////////////
+/*
+CARTOON EFFECT 
+
+
+*/
+
+
+export const GenerativeCartoon_Effects =  (canvasCtx, effectSubCategory, options) =>{
+  if(canvasCtx){
+        //PIXEL_EFFECT_001
+        //PIXEL_EFFECT_002
+        //effectSubCategory : "PIXEL_EFFECT_001",
+
+        pixelEffectWithCartoonEffect(canvasCtx, 
+          { color: "white", 
+            lineWidth: 0.124, 
+            radius: 0.75, 
+            numOfcells: options.numOfcells, 
+            numberOfColors: options.numberOfColors,
+            colorGradientValue: options.colorGradientValue,
+            gradientColorItemsValue: options.gradientColorItemsValue});
+
+        
+        
+       
+  }
+}; 
+
+
+
+
+export const pixelEffectWithCartoonEffect =  (canvasCtx, options) =>{
+  if(canvasCtx){
+    canvasCtx.save();
+    var canvasss = canvasCtx.canvas; 
+    var canvasWidth  = canvasss.width;
+    var canvasHeight  =  canvasss.height;
+    var nxt_X_StartPt = 0;
+    var nxt_Y_StartPt = 0;
+    var numberOfColors = options.numberOfColors;
+    var colorGradientValue = options.colorGradientValue;
+    var gradientColorItemsValue;
+    if (typeof options.gradientColorItemsValue !== "undefined" && options.gradientColorItemsValue !== null)
+    {
+      //arrays of colourData template
+      gradientColorItemsValue = options.gradientColorItemsValue;
+    }
+    var idata = canvasCtx.getImageData(nxt_X_StartPt, nxt_Y_StartPt, canvasWidth , canvasHeight);
+    var buffer = idata.data;
+    var lenBuffer = buffer.length;
+    for (var i = 0; i < lenBuffer; i += 4) {
+      var redValue = buffer[i];
+      var greenValue = buffer[i + 1];
+      var blueValue = buffer[i + 2];
+      var alphaValue = buffer[i + 3]; //opacity
+      let count = buffer[i] + buffer[i + 1] + buffer[i + 2];
+      //using numberOfColors, and maximum possible value of count (i.e 256 + 256 + 256 = 768)
+      //divide 256/numberOfColors 
+      // for each numberOfColors find corresponding sets of colour 
+      //eg numberOfColors , make use of gray, white, black   or dark blue/blue/pale blue 
+
+      let colour = 0;
+      if(numberOfColors > 0)
+      {
+        var rangeValue = (768)/numberOfColors; 
+        for(var x = 1; x <= numberOfColors; x++)
+        {
+          if(count >= (rangeValue * x)){
+            if(gradientColorItemsValue[x-1] !== null && typeof gradientColorItemsValue[x-1] !== "undefined")
+            {
+              redValue = gradientColorItemsValue[x-1].redValue;
+              greenValue = gradientColorItemsValue[x-1].greenValue;
+              blueValue = gradientColorItemsValue[x-1].blueValue;
+            }
+          }
+        }
+      } 
+      buffer[i] = redValue;
+      buffer[i + 1] = greenValue;
+      buffer[i + 2] = blueValue;   
+      buffer[i + 3] = 255;
+    }
+    canvasCtx.putImageData(idata, nxt_X_StartPt, nxt_Y_StartPt);
+  }
+};
+
