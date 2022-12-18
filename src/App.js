@@ -62,6 +62,8 @@ function App() {
   const [cameraOn, setCameraOn] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
 
+  const [facingMode, setFacingMode] = useState('environment');
+
   let menuRef = useRef();
 
   //START Picture Buttons
@@ -78,6 +80,17 @@ function App() {
     ctx.drawImage(video, 0, 0, width, height);
     setHasPhoto(true);
   }
+
+  const toggleCamera = () => {
+    if (facingMode === 'environment') {
+      setFacingMode('user');
+    } else {
+      setFacingMode('environment');
+    }
+  }
+
+  
+
 
   const closePhoto = () => {
     let photo = photoRef.current;
@@ -129,12 +142,18 @@ function App() {
     {
       navigator.mediaDevices
       .getUserMedia({ 
-        video: {width: 640, height: 480 } 
+        video: {
+          width: 640, 
+          height: 480,
+          facingMode: { ideal: facingMode }
+         } 
       }).then(stream => {
           let video = videoRef.current;
           if (typeof videoRef.current !== "undefined" && videoRef.current !== null)
           {
             video.srcObject = stream;
+
+            console.log('   facingMode : ', facingMode);
             var playPromise =  video.play();        
             if (playPromise !== undefined) {
               playPromise.then(_ => {
@@ -463,6 +482,8 @@ function App() {
                               <>
                                 <DropdownItem funtionCall = {stopCamera} canvasEffect = {"NONE"} img = {stopCamIco} text = {"Stop Camera"} />
                                 <DropdownItem funtionCall = {takePhoto} canvasEffect = {"NONE"} img = {takePictureIco} text = {"Take Picture"}/>
+                                <DropdownItem funtionCall = {toggleCamera} canvasEffect = {"NONE"} img = {takePictureIco} text = {"Toggle Camera"}/>
+
                                 <DropdownItem funtionCall = {generateRandomColorEffectV1} canvasEffect = {"NONE"} img = {camEffect1Ico} text = {"Random 5 Color Effect"}/>
                                 <DropdownItem funtionCall = {generateRandomColorEffectV2} canvasEffect = {"NONE"} img = {camEffect2Ico} text = {"Random 10 Color Effect"}/>
                                 <DropdownItem funtionCall = {generateCartoonEffect} canvasEffect = {"NONE"} img = {canvasEffectico} text = {"Cartoon"}/>
