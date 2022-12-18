@@ -31,6 +31,8 @@ var globalnumOfcells = 10;
 var globalgradientColorItemsValue;
 
 
+var toggleMode = "user";
+
 //First Effect is reserved for Pixel Effect
 //Second Effect is reserved for Pattern Effect
 var globalEffectListOption = [
@@ -87,7 +89,9 @@ function App() {
     } else {
       setFacingMode('environment');
     }
-    turnCameraOn(true);
+
+    toggleMode = toggleMode === "environment" ? "user" : "environment" ;
+    //turnCameraOn(true);
   }
 
   
@@ -141,12 +145,13 @@ function App() {
   const turnCameraOn =  (turnOn) => {
     if(cameraOn && turnOn)
     {
+      console.log('   facing mode : ', toggleMode);
       navigator.mediaDevices
       .getUserMedia({ 
         video: {
           width: 640, 
           height: 480,
-          facingMode: { ideal: facingMode }
+          facingMode: { ideal: toggleMode }
          } 
       }).then(stream => {
           let video = videoRef.current;
@@ -154,7 +159,6 @@ function App() {
           {
             video.srcObject = stream;
 
-            console.log('   facingMode : ', facingMode);
             var playPromise =  video.play();        
             if (playPromise !== undefined) {
               playPromise.then(_ => {
