@@ -87,6 +87,7 @@ function App() {
     } else {
       setFacingMode('environment');
     }
+    turnCameraOn(true);
   }
 
   
