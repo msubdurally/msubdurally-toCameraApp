@@ -91,7 +91,7 @@ function App() {
     }
 
     toggleMode = toggleMode === "environment" ? "user" : "environment" ;
-    //turnCameraOn(true);
+    turnCameraOn(true);
   }
 
   
@@ -145,12 +145,12 @@ function App() {
   const turnCameraOn =  (turnOn) => {
     if(cameraOn && turnOn)
     {
-      console.log('   facing mode : ', toggleMode);
+      //console('   facing mode : ', toggleMode);
       navigator.mediaDevices
       .getUserMedia({ 
         video: {
-          width: 640, 
-          height: 480,
+          width: { ideal: 4096 },
+          height: { ideal: 2160 },
           facingMode: { ideal: toggleMode }
          } 
       }).then(stream => {
@@ -167,6 +167,9 @@ function App() {
                 // We can now safely pause video...
                 //video.stop();
                 console.log(' Automatic playback started!');
+
+                //NOTE : set only width as it seems that height is automatically calculated based on device screen.
+                video.style.width =  '100%';
                 if (typeof video !== "undefined" && video !== null)
                 {
                   console.log('    videoFrame : ', video.video);
@@ -433,6 +436,8 @@ function App() {
         <div className="camera">
           {cameraOn ? (
             <video
+            className="camera-video"
+            
             preload="none"
             ref={videoRef}
             style={{
@@ -443,8 +448,7 @@ function App() {
               right: 0,
               textAlign: "center",
               zindex: 9,
-              width: 640,
-              height: 480 ,
+              
               }}
             />
           ) : (
@@ -456,7 +460,7 @@ function App() {
           {" "}
           <canvas
             ref={canvasRef}
-            className="output_canvas"
+            className="camera-video"
             style={{
             position: "absolute",
             marginLeft: "auto",
@@ -465,8 +469,7 @@ function App() {
             right: 0,
             textAlign: "center",
             zindex: 9,
-            width: 640,
-            height: 480 ,
+            
             }}
           ></canvas>
         </div>

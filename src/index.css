@@ -7,12 +7,19 @@
 
 .App {
   min-height: 100vh;
+  min-width: 100vw;
   position: relative;
   background-color: #313131; 
+  overflow:hidden;
 }
 
 .camera {
   position: relative;
+}
+
+.camera-video {
+  width: 100%;
+  overflow:hidden;
 }
 
 .result {
