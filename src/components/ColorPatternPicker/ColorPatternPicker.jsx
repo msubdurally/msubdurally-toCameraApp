@@ -57,7 +57,7 @@ const [patterns, setPatterns] = useState([]);
         effectSubCategory : "GENERATIVE_ART4",
         numOfColoursValue : "5",
         colorgradientValue : "colorGradients", 
-        numOfcells : "20",
+        numOfcells : "35",
         effectLabel : "GenerativeArt 4"
       },
       { 

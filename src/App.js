@@ -149,8 +149,8 @@ function App() {
       navigator.mediaDevices
       .getUserMedia({ 
         video: {
-          width: { ideal: 4096 },
-          height: { ideal: 2160 },
+          width: { ideal: 1280  },
+          height: { ideal: 720 },
           facingMode: { ideal: toggleMode }
          } 
       }).then(stream => {
@@ -346,6 +346,7 @@ function App() {
             
             if(globalEffectListOption[1] && globalEffectListOption[1].globalEffectCategory === "GENERATIVE_ART")
             {
+            
               artUtil.GenerativeArt_Effects(canvasCtx,
                 globalEffectListOption[1].globalEffectSubCategory, 
                  { color: "white", lineWidth: 0.124, radius: 0.75, numOfcells: globalEffectListOption[1].globalnumOfcells}, 
