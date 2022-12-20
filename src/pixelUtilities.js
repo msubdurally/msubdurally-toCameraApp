@@ -286,8 +286,6 @@ export const removeNoise =  (canvasCtx, options) =>{
 
         // Calculate the median value of the surrounding pixels
         const surroundingPixels = getSurroundingPixels(x, y, kernelSize, buffer, canvasWidth, canvasHeight);
-        
-        debugger;
         //median
         const median = getMedian(surroundingPixels);
 
