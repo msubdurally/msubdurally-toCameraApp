@@ -202,6 +202,11 @@ function App() {
     videoCanvasEffect("CARTOON", "CARTOON", "CARTOON_EFFECT_001", 5, 5, 20);
   }
 
+  //generateCartoonEffectV2
+  const generateCartoonEffectV2 = () => {
+    videoCanvasEffect("CARTOON", "CARTOON", "CARTOON_EFFECT_002", 5, 5, 20);
+  }
+
   const generateRandomColorEffectV1 = () => {
     videoCanvasEffect("PIXEL", "PIXEL", "PIXEL_EFFECT_001", 5, 5, 20);
   }
@@ -331,6 +336,22 @@ function App() {
 
             if(globalEffectListOption[0] && globalEffectListOption[0].globalEffectCategory === "CARTOON")
             {
+
+              //if(effectSubCategory  == "CARTOON_EFFECT_001")
+              //remove Noise
+              if(globalEffectListOption[0].globalEffectSubCategory == "CARTOON_EFFECT_002")
+              {
+                //apply remove nois first
+                pixelUtil.removeNoise(canvasCtx,
+                  { color: "white", 
+                    lineWidth: 0.124, 
+                    radius: 0.75, 
+                    numberOfColors: globalEffectListOption[0].globalnumOfColoursValue, 
+                    colorGradientValue : 10, 
+                    gradientColorItemsValue: globalEffectListOption[0].globalgradientColorItemsValue
+                  });
+
+              }
 
               pixelUtil.GenerativeCartoon_Effects(canvasCtx,
                     globalEffectListOption[0].globalEffectSubCategory,
@@ -495,7 +516,8 @@ function App() {
 
                                 <DropdownItem funtionCall = {generateRandomColorEffectV1} canvasEffect = {"NONE"} img = {camEffect1Ico} text = {"Random 5 Color Effect"}/>
                                 <DropdownItem funtionCall = {generateRandomColorEffectV2} canvasEffect = {"NONE"} img = {camEffect2Ico} text = {"Random 10 Color Effect"}/>
-                                <DropdownItem funtionCall = {generateCartoonEffect} canvasEffect = {"NONE"} img = {canvasEffectico} text = {"Cartoon"}/>
+                                <DropdownItem funtionCall = {generateCartoonEffect} canvasEffect = {"NONE"} img = {canvasEffectico} text = {"w Noise"}/>
+                                <DropdownItem funtionCall = {generateCartoonEffectV2} canvasEffect = {"NONE"} img = {canvasEffectico} text = {"w/o Noise"}/>
 
 
                                 <li className = 'dropdownItem_li'>
