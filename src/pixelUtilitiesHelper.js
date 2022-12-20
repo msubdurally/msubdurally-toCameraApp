@@ -168,14 +168,12 @@ export const generateRandomHexColors =  (globalcolorgradientValue) =>{
     
 
   gradientColorItemsValue = convertHexToRGB(gradientColorItemsValue);
-  //debugger;
   return gradientColorItemsValue; 
 };
 
 
 
 export const convertHexToRGB =  (gradientColorItemsValue) =>{
-  //debugger;
 
   var dict = []; // create an empty array
     var pattern_color = "^#([A-Fa-f0-9]{6})$";
